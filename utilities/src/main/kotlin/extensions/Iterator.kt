@@ -4,45 +4,25 @@ package extensions
 
 import com.google.common.collect.HashMultiset
 
-fun <T> Iterator<T>.firstRepeat(): T? {
-    val seen = mutableSetOf<T>()
+fun <T> Iterator<T>.firstRepeat() = firstRepeatIndexedValue()?.value
 
-    for (element in this) {
-        if (!seen.add(element)) return element
-    }
+fun <T> Iterator<T>.firstRepeat(targetCount: Int) = firstRepeatIndexedValue(targetCount)?.value
 
-    return null
-}
+fun <T> Iterator<T>.firstRepeatIndex() = firstRepeatIndexedValue()?.index
 
-fun <T> Iterator<T>.firstRepeat(targetCount: Int): T? {
-    check(targetCount >= 3) {
-        "This method cannot be called with a targetCount less than 3."
-    }
+fun <T> Iterator<T>.firstRepeatIndex(targetCount: Int) = firstRepeatIndexedValue(targetCount)?.index
 
-    val seen = HashMultiset.create<T>()
-
-    for (element in this) {
-        if (seen.count(element) + 1 == targetCount) {
-            return element
-        }
-
-        seen.add(element)
-    }
-
-    return null
-}
-
-fun <T> Iterator<T>.firstRepeatIndex(): Int? {
+fun <T> Iterator<T>.firstRepeatIndexedValue(): IndexedValue<T>? {
     val seen = mutableSetOf<T>()
 
     for (element in withIndex()) {
-        if (!seen.add(element.value)) return element.index
+        if (!seen.add(element.value)) return element
     }
 
     return null
 }
 
-fun <T> Iterator<T>.firstRepeatIndex(targetCount: Int): Int? {
+fun <T> Iterator<T>.firstRepeatIndexedValue(targetCount: Int): IndexedValue<T>? {
     check(targetCount >= 3) {
         "This method cannot be called with a targetCount less than 3."
     }
@@ -51,7 +31,7 @@ fun <T> Iterator<T>.firstRepeatIndex(targetCount: Int): Int? {
 
     for (element in withIndex()) {
         if (seen.count(element.value) + 1 == targetCount) {
-            return element.index
+            return element
         }
 
         seen.add(element.value)
