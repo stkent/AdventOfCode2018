@@ -24,7 +24,7 @@ fun <T, R> Iterable<T>.accumulate(initial: R, operation: (accumulated: R, next: 
     return result
 }
 
-fun <E> Iterable<E>.elementCounts(): Map<E, Int> {
+fun <T> Iterable<T>.elementCounts(): Map<T, Int> {
     return groupingBy { it }.eachCount()
 }
 
@@ -39,14 +39,14 @@ fun <T> Iterable<T>.firstRepeat(targetCount: Int = 2): T? {
 fun <T> Iterable<T>.head() = first()
 
 // Returns a finite Sequence that loops through the original list the specified number of times.
-fun <E> Iterable<E>.loop(times: Int): Sequence<E> {
+fun <T> Iterable<T>.loop(times: Int): Sequence<T> {
     return sequence {
         repeat(times) { yieldAll(this@loop) }
     }
 }
 
 // Returns an infinite Sequence that loops through the original (finite) list indefinitely.
-fun <E> Iterable<E>.loopForever(): Sequence<E> {
+fun <T> Iterable<T>.loopForever(): Sequence<T> {
     return sequence {
         while (true) yieldAll(this@loopForever)
     }

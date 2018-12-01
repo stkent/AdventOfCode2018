@@ -40,7 +40,7 @@ fun <T> Collection<T>.anyRepeat(): Boolean {
     return !allDistinct()
 }
 
-fun <E> Collection<E>.highestFrequencyElements(): Set<E> {
+fun <T> Collection<T>.highestFrequencyElements(): Set<T> {
     if (isEmpty()) return emptySet()
 
     val elementCounts = elementCounts()
@@ -52,7 +52,7 @@ fun <E> Collection<E>.highestFrequencyElements(): Set<E> {
             .toSet()
 }
 
-fun <E> Collection<E>.lowestFrequencyElements(): Set<E> {
+fun <T> Collection<T>.lowestFrequencyElements(): Set<T> {
     if (isEmpty()) return emptySet()
 
     val elementCounts = elementCounts()
@@ -64,10 +64,10 @@ fun <E> Collection<E>.lowestFrequencyElements(): Set<E> {
             .toSet()
 }
 
-fun <E> Collection<E>.orderedPairs(): Multiset<Pair<E, E>> {
+fun <T> Collection<T>.orderedPairs(): Multiset<Pair<T, T>> {
     val unorderedPairs = unorderedPairs()
 
-    val result = HashMultiset.create<Pair<E, E>>()
+    val result = HashMultiset.create<Pair<T, T>>()
 
     unorderedPairs.forEach {
         val orderedPair = Pair(it.first(), it.last())
@@ -78,12 +78,12 @@ fun <E> Collection<E>.orderedPairs(): Multiset<Pair<E, E>> {
     return result
 }
 
-fun <E> Collection<E>.permutations(): Set<List<E>> {
+fun <T> Collection<T>.permutations(): Set<List<T>> {
     if (isEmpty()) return emptySet()
 
     if (size == 1) return setOf(listOf(first()))
 
-    val result = mutableSetOf<List<E>>()
+    val result = mutableSetOf<List<T>>()
 
     for (element in this) {
         (this - element).permutations().forEach {
@@ -96,8 +96,8 @@ fun <E> Collection<E>.permutations(): Set<List<E>> {
     return result
 }
 
-fun <E> Collection<E>.unorderedPairs(): Multiset<Set<E>> {
-    val result = HashMultiset.create<Set<E>>()
+fun <T> Collection<T>.unorderedPairs(): Multiset<Set<T>> {
+    val result = HashMultiset.create<Set<T>>()
 
     if (size < 2) return result
 

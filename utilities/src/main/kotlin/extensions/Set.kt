@@ -2,7 +2,7 @@
 
 package extensions
 
-fun <E> Set<E>.powerSet(): Set<Set<E>> {
+fun <T> Set<T>.powerSet(): Set<Set<T>> {
     return when (size) {
         0 -> setOf(emptySet())
         1 -> setOf(this, emptySet())
@@ -12,7 +12,7 @@ fun <E> Set<E>.powerSet(): Set<Set<E>> {
 
             val exclusiveRemainderPowerSet = minus(anyElement).powerSet()
 
-            val inclusiveRemainderPowerSet = emptySet<Set<E>>().toMutableSet()
+            val inclusiveRemainderPowerSet = emptySet<Set<T>>().toMutableSet()
             exclusiveRemainderPowerSet.mapTo(inclusiveRemainderPowerSet) { it.union(setOf(anyElement)) }
 
             return exclusiveRemainderPowerSet.union(inclusiveRemainderPowerSet)
