@@ -38,14 +38,14 @@ fun <T> Iterable<T>.firstRepeat(targetCount: Int = 2): T? {
 
 fun <T> Iterable<T>.head() = first()
 
-// Returns a finite Sequence that loops through the original list the specified number of times.
+// Returns a finite Sequence that loops through the original iterable the specified number of times.
 fun <T> Iterable<T>.loop(times: Int): Sequence<T> {
     return sequence {
         repeat(times) { yieldAll(this@loop) }
     }
 }
 
-// Returns an infinite Sequence that loops through the original (finite) list indefinitely.
+// Returns an infinite Sequence that loops through the original iterable indefinitely.
 fun <T> Iterable<T>.loopForever(): Sequence<T> {
     return sequence {
         while (true) yieldAll(this@loopForever)
