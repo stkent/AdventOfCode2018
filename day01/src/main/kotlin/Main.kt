@@ -1,18 +1,8 @@
-import extensions.accumulate
-import extensions.firstRepeat
-import extensions.loopForever
-
 fun main() {
     val input = resourceFile("input.txt").readLines()
 
-    val frequencyShifts = input.map { Integer.parseInt(it) }
+    val device = Device()
 
-    println("part1: ${frequencyShifts.sum()}")
-
-    val part2 = frequencyShifts
-        .loopForever()
-        .accumulate(Int::plus)
-        .firstRepeat()
-
-    println("part2: $part2")
+    println("Part 1 solution: ${device.netFrequencyChange(frequencyChangeStrings = input)}")
+    println("Part 2 solution: ${device.firstRepeatedFrequency(frequencyChangeStrings = input)}")
 }

@@ -8,19 +8,30 @@ fun <T> Sequence<T>.accumulate(operation: (accumulated: T, next: T) -> T): Seque
     if (!iterator.hasNext()) return emptySequence()
 
     return sequence {
-        var accumulated = iterator.next().also { yield(it) }
+        var accumulator = iterator.next().also { yield(it) }
 
-        for (next in iterator) {
-            accumulated = operation(accumulated, next)
-            yield(accumulated)
+        for (element in iterator) {
+            accumulator = operation(accumulator, element).also { yield(it) }
         }
     }
 }
 
-fun <T> Sequence<T>.firstRepeat(targetCount: Int = 2): T? {
-    check(targetCount >= 2) {
-        "This method cannot be called with a targetCount less than 2."
+fun <T, U> Sequence<T>.accumulate(initial: U, operation: (accumulated: U, next: T) -> U): Sequence<U> {
+    return sequence {
+        var accumulator = initial.also { yield(it) }
+
+        for (element in this@accumulate) {
+            accumulator = operation(accumulator, element).also { yield(it) }
+        }
+    }
+}
+
+fun <T> Sequence<T>.firstRepeat() = iterator().firstRepeat()
+
+fun <T> Sequence<T>.firstRepeat(targetCount: Int): T? {
+    check(targetCount >= 3) {
+        "This method cannot be called with a targetCount less than 3."
     }
 
-    return iterator().firstRepeat(targetCount)
+    return iterator().firstRepeat(targetCount = targetCount)
 }
