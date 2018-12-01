@@ -5,24 +5,6 @@ package extensions
 import com.google.common.collect.HashMultiset
 import com.google.common.collect.Multiset
 
-// Adapted from stdlib proposal: https://youtrack.jetbrains.com/issue/KT-7657#comment=27-2602841
-fun <T> Collection<T>.accumulate(operation: (previous: T, current: T) -> T): List<T> {
-    check(isNotEmpty()) {
-        "This method cannot be called on empty Collections."
-    }
-
-    val result = mutableListOf(head())
-    for (element in tail()) result.add(operation(result.last(), element))
-    return result
-}
-
-// Adapted from stdlib proposal: https://youtrack.jetbrains.com/issue/KT-7657#comment=27-2602841
-fun <T, R> Collection<T>.accumulate(initial: R, operation: (previous: R, current: T) -> R): List<R> {
-    val result = mutableListOf(initial)
-    for (element in this) result.add(operation(result.last(), element))
-    return result
-}
-
 fun <T> Collection<T>.allDistinct(): Boolean {
     check(isNotEmpty()) {
         "This method cannot be called on empty Collections."

@@ -1,25 +1,18 @@
+import extensions.accumulate
+import extensions.firstRepeat
+import extensions.loopForever
+
 fun main() {
-    val input = resourceFile("input.txt")
+    val input = resourceFile("input.txt").readLines()
 
-//    println(input.readLines()
-//        .map { Integer.parseInt(it) }
-//        .sum())
+    val frequencyShifts = input.map { Integer.parseInt(it) }
 
-    var acc = 0
-    val seen = mutableSetOf(0)
+    println("part1: ${frequencyShifts.sum()}")
 
-    val allLines = input.readLines()
-    var index = 0
+    val part2 = frequencyShifts
+        .loopForever()
+        .accumulate(Int::plus)
+        .firstRepeat()
 
-    while (true) {
-        acc += Integer.parseInt(allLines[index])
-
-        if (seen.contains(acc)) {
-            println(acc)
-            break
-        }
-
-        seen.add(acc)
-        index = (++index).rem(allLines.size)
-    }
+    println("part2: $part2")
 }
