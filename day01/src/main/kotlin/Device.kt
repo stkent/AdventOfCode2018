@@ -5,9 +5,7 @@ import extensions.repeatIndefinitely
 class Device {
 
     fun netFrequencyChange(frequencyChangeStrings: Iterable<String>): Int {
-        return frequencyChangeStrings
-            .map(String::toInt)
-            .sum()
+        return frequencyChangeStrings.sumBy(String::toInt)
     }
 
     fun firstRepeatedFrequency(frequencyChangeStrings: Iterable<String>): Int? {
