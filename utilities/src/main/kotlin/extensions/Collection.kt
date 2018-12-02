@@ -64,18 +64,17 @@ fun <T> Collection<T>.lowestFrequencyElements(): Set<T> {
             .toSet()
 }
 
-fun <T> Collection<T>.orderedPairs(): Multiset<Pair<T, T>> {
+fun <T> Collection<T>.orderedPairs(): Map<Pair<T, T>, Int> {
     val unorderedPairs = unorderedPairs()
 
     val result = HashMultiset.create<Pair<T, T>>()
 
-    unorderedPairs.forEach {
-        val orderedPair = Pair(it.first(), it.last())
-        result.add(orderedPair)
-        result.add(orderedPair.flip())
+    unorderedPairs.forEach { pair, count ->
+        result.add(pair, count)
+        result.add(pair.flip(), count)
     }
 
-    return result
+    return result.toMap()
 }
 
 fun <T> Collection<T>.permutations(): Set<List<T>> {
@@ -96,19 +95,35 @@ fun <T> Collection<T>.permutations(): Set<List<T>> {
     return result
 }
 
-fun <T> Collection<T>.unorderedPairs(): Multiset<Set<T>> {
-    val result = HashMultiset.create<Set<T>>()
+fun <T> Collection<T>.unorderedPairs(): Map<Pair<T, T>, Int> {
+    val result = HashMultiset.create<Pair<T, T>>()
 
-    if (size < 2) return result
+    if (size < 2) return result.toMap()
 
     if (size == 2) {
-        result.add(setOf(first(), last()))
-        return result
+        result.add(first() to last())
+        return result.toMap()
     }
 
     val head = head()
     val tail = tail()
-    result.addAll(tail.map { setOf(head, it) })
-    result.addAll(tail.unorderedPairs())
+
+    result.addAll(tail.map { head to it })
+    tail.unorderedPairs().forEach { pair, count -> result.add(pair, count) }
+
+    return result.toMap()
+}
+
+
+
+
+
+fun <T> Multiset<T>.toMap(): Map<T, Int> {
+    val result = mutableMapOf<T, Int>()
+
+    entrySet().forEach { entry ->
+        result[entry.element] = entry.count
+    }
+
     return result
 }

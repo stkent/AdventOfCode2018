@@ -39,11 +39,9 @@ class OrderedPairsTest : BehaviorSpec({
             val orderedPairs = collection.orderedPairs()
 
             Then("the result should contain both the expected pairs") {
-                orderedPairs shouldBe HashMultiset.create(
-                        listOf(
-                                Pair(4, 7),
-                                Pair(7, 4)
-                        )
+                orderedPairs shouldBe mapOf(
+                    (4 to 7) to 1,
+                    (7 to 4) to 1
                 )
             }
         }
@@ -56,15 +54,13 @@ class OrderedPairsTest : BehaviorSpec({
             val orderedPairs = collection.orderedPairs()
 
             Then("the result should contain all 6 expected pairs") {
-                orderedPairs shouldBe HashMultiset.create(
-                        listOf(
-                                Pair(2, 5),
-                                Pair(2, 8),
-                                Pair(5, 8),
-                                Pair(5, 2),
-                                Pair(8, 2),
-                                Pair(8, 5)
-                        )
+                orderedPairs shouldBe mapOf(
+                    (2 to 5) to 1,
+                    (2 to 8) to 1,
+                    (5 to 8) to 1,
+                    (5 to 2) to 1,
+                    (8 to 2) to 1,
+                    (8 to 5) to 1
                 )
             }
         }
@@ -77,21 +73,19 @@ class OrderedPairsTest : BehaviorSpec({
             val orderedPairs = collection.orderedPairs()
 
             Then("the result should contain all 12 expected pairs") {
-                orderedPairs shouldBe HashMultiset.create(
-                        listOf(
-                                Pair(3, 6),
-                                Pair(3, 9),
-                                Pair(3, 11),
-                                Pair(6, 9),
-                                Pair(6, 11),
-                                Pair(9, 11),
-                                Pair(6, 3),
-                                Pair(9, 3),
-                                Pair(11, 3),
-                                Pair(9, 6),
-                                Pair(11, 6),
-                                Pair(11, 9)
-                        )
+                orderedPairs shouldBe mapOf(
+                    (3 to 6) to 1,
+                    (3 to 9) to 1,
+                    (3 to 11) to 1,
+                    (6 to 9) to 1,
+                    (6 to 11) to 1,
+                    (9 to 11) to 1,
+                    (6 to 3) to 1,
+                    (9 to 3) to 1,
+                    (11 to 3) to 1,
+                    (9 to 6) to 1,
+                    (11 to 6) to 1,
+                    (11 to 9) to 1
                 )
             }
         }

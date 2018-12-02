@@ -26,6 +26,6 @@ fun CharSequence.anyRepeat(): Boolean {
     return !allDistinct()
 }
 
-fun CharSequence.characterCounts(): Map<Char, Int> {
+fun CharSequence.charCounts(): Map<Char, Int> {
     return groupingBy { it }.eachCount()
 }

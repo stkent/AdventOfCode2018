@@ -1,6 +1,5 @@
 package math
 
-import com.google.common.collect.HashMultiset
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.BehaviorSpec
 import primeFactors
@@ -14,7 +13,7 @@ class PrimeFactorsTests : BehaviorSpec({
             val factors = primeFactors(integer)
 
             Then("the result should be [2]") {
-                factors shouldBe HashMultiset.create(listOf(2))
+                factors shouldBe listOf(2)
             }
         }
     }
@@ -26,7 +25,7 @@ class PrimeFactorsTests : BehaviorSpec({
             val factors = primeFactors(integer)
 
             Then("the result should be [3]") {
-                factors shouldBe HashMultiset.create(listOf(3))
+                factors shouldBe listOf(3)
             }
         }
     }
@@ -38,7 +37,7 @@ class PrimeFactorsTests : BehaviorSpec({
             val factors = primeFactors(integer)
 
             Then("the result should be [2, 2]") {
-                factors shouldBe HashMultiset.create(listOf(2, 2))
+                factors shouldBe listOf(2, 2)
             }
         }
     }
@@ -50,7 +49,7 @@ class PrimeFactorsTests : BehaviorSpec({
             val factors = primeFactors(integer)
 
             Then("the result should be [5]") {
-                factors shouldBe HashMultiset.create(listOf(5))
+                factors shouldBe listOf(5)
             }
         }
     }
@@ -62,7 +61,7 @@ class PrimeFactorsTests : BehaviorSpec({
             val factors = primeFactors(integer)
 
             Then("the result should be [2, 3]") {
-                factors shouldBe HashMultiset.create(listOf(2, 3))
+                factors shouldBe listOf(2, 3)
             }
         }
     }
@@ -74,7 +73,7 @@ class PrimeFactorsTests : BehaviorSpec({
             val factors = primeFactors(integer)
 
             Then("the result should be [2, 2, 2]") {
-                factors shouldBe HashMultiset.create(listOf(2, 2, 2))
+                factors shouldBe listOf(2, 2, 2)
             }
         }
     }

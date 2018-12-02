@@ -2,6 +2,7 @@
 
 import com.google.common.collect.HashMultiset
 import com.google.common.collect.Multiset
+import extensions.toMap
 
 // From https://en.wikipedia.org/wiki/Greatest_common_divisor#Using_Euclid's_algorithm
 fun gcd(a: Int, b: Int): Int {
@@ -26,8 +27,8 @@ fun lcm(a: Int, b: Int): Int {
 }
 
 // From https://www.geeksforgeeks.org/print-all-prime-factors-of-a-given-number/
-fun primeFactors(n: Int): Multiset<Int> {
-    val result = HashMultiset.create<Int>()
+fun primeFactors(n: Int): List<Int> {
+    val result = mutableListOf<Int>()
 
     if (n < 2) return result
 

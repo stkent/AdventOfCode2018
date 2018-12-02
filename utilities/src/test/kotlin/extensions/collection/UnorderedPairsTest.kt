@@ -1,6 +1,5 @@
 package extensions.collection
 
-import com.google.common.collect.HashMultiset
 import extensions.unorderedPairs
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.BehaviorSpec
@@ -38,7 +37,7 @@ class UnorderedPairsTest : BehaviorSpec({
             val unorderedPairs = collection.unorderedPairs()
 
             Then("the result should contain a single unordered pair containing the elements in the original collection") {
-                unorderedPairs shouldBe HashMultiset.create(listOf(setOf(4, 7)))
+                unorderedPairs shouldBe mapOf((4 to 7) to 1)
             }
         }
     }
@@ -50,12 +49,9 @@ class UnorderedPairsTest : BehaviorSpec({
             val unorderedPairs = collection.unorderedPairs()
 
             Then("the result should contain all 3 expected pairs") {
-                unorderedPairs shouldBe HashMultiset.create(
-                        listOf(
-                                setOf(2, 5),
-                                setOf(2, 5),
-                                setOf(5, 5)
-                        )
+                unorderedPairs shouldBe mapOf(
+                    (2 to 5) to 2,
+                    (5 to 5 to 1)
                 )
             }
         }
@@ -68,15 +64,11 @@ class UnorderedPairsTest : BehaviorSpec({
             val unorderedPairs = collection.unorderedPairs()
 
             Then("the result should contain all 6 expected pairs") {
-                unorderedPairs shouldBe HashMultiset.create(
-                        listOf(
-                                setOf(3, 6),
-                                setOf(3, 9),
-                                setOf(3, 9),
-                                setOf(6, 9),
-                                setOf(6, 9),
-                                setOf(9, 9)
-                        )
+                unorderedPairs shouldBe mapOf(
+                    (3 to 6) to 1,
+                    (3 to 9) to 2,
+                    (6 to 9) to 2,
+                    (9 to 9) to 1
                 )
             }
         }

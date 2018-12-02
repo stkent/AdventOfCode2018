@@ -1,41 +1,33 @@
-import extensions.characterCounts
-import extensions.orderedPairs
+import extensions.charCounts
+import extensions.unorderedPairs
+import extensions.valuesMatch
 
 fun main() {
     val input = resourceFile("input.txt").readLines()
 
     // 1
 
-    val numberTwice = input.count { string -> string.characterCounts().any { count -> count.value == 2 } }
-    val numberThrice = input.count { string -> string.characterCounts().any { count -> count.value == 3 } }
+    val doubleCharCount = input.count { id -> id.charCounts().any { it.value == 2 } }
+    val tripleCharCount = input.count { id -> id.charCounts().any { it.value == 3 } }
 
-    println(numberTwice * numberThrice)
+    println(doubleCharCount * tripleCharCount)
 
     // 2
 
-    val input2 = listOf(
-        "abcde",
-        "fghij",
-        "klmno",
-        "pqrst",
-        "fguij",
-        "axcye",
-        "wvxyz"
-    )
+    val idLength = input.first().length
 
-    println(input2.windowed(2, 1).map { Pair(it.first(), it.last()) })
+    val s2 = input.unorderedPairs()
+        .keys
+        .asSequence()
+        .map { idPair -> commonString(idPair.first, idPair.second) }
+        .first { commonString -> commonString.length == idLength - 1 }
 
-    val s2 = input.orderedPairs().toSet()
-        .first { pair ->
-            var diffChars = 0
-            for (i in 0 until pair.first.length) {
-                if (pair.first[i] != pair.second[i]) {
-                    diffChars++
-                }
-            }
+    println(s2)
+}
 
-            diffChars == 1
-        }
-
-    println(s2.first.toList().zip(s2.second.toList()).filter { it.first == it.second }.map { it.first }.joinToString(separator = ""))
+fun commonString(left: String, right: String): String {
+    return left.zip(right)
+        .filter(Pair<Char, Char>::valuesMatch)
+        .map(Pair<Char, Char>::first)
+        .joinToString(separator = "")
 }
