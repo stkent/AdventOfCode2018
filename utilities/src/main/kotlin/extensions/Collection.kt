@@ -114,10 +114,6 @@ fun <T> Collection<T>.unorderedPairs(): Map<Pair<T, T>, Int> {
     return result.toMap()
 }
 
-
-
-
-
 fun <T> Multiset<T>.toMap(): Map<T, Int> {
     val result = mutableMapOf<T, Int>()
 

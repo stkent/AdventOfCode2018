@@ -2,6 +2,15 @@
 
 package extensions
 
+// https://en.wikipedia.org/wiki/Hamming_distance
+fun String.hammingDistanceFrom(other: String): Int {
+    check(length == other.length) {
+        "This method can only be called using equal length strings."
+    }
+
+    return zip(other).count { charPair -> !charPair.valuesMatch() }
+}
+
 fun String.isAnagramOf(target: String): Boolean {
     return toCharArray().sorted() == target.toCharArray().sorted()
 }
