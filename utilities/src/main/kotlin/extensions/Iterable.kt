@@ -46,6 +46,12 @@ fun <T> Iterable<T>.head() = first()
 
 infix fun <T> Iterable<T>.intersects(other: Iterable<T>) = intersect(other).isNotEmpty()
 
+fun <T> Iterable<T>.mode(): Mode<T>? {
+    return elementCounts()
+        .maxBy { it.value }
+        ?.run { Mode(modalValue = key, count = value) }
+}
+
 // Returns a finite Sequence that loops through the original iterable the specified number of times.
 fun <T> Iterable<T>.repeat(times: Int): Sequence<T> {
     if (!iterator().hasNext()) return emptySequence()
@@ -65,3 +71,7 @@ fun <T> Iterable<T>.repeatIndefinitely(): Sequence<T> {
 }
 
 fun <T> Iterable<T>.tail() = drop(1)
+
+// Supporting classes ----------------------------------------------------------------------------------------------- //
+
+data class Mode<T>(val modalValue: T, val count: Int)

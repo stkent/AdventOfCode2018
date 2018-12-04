@@ -1,9 +1,7 @@
 @file:Suppress("unused", "MemberVisibilityCanBePrivate")
 
 import extensions.pow
-import sun.management.snmp.jvminstr.JvmThreadInstanceEntryImpl.ThreadStateMap.Byte1.other
 import kotlin.math.abs
-import kotlin.math.max
 import kotlin.math.sqrt
 
 data class GridVector3d(val x: Int, val y: Int, val z: Int) {
