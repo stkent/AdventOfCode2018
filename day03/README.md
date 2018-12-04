@@ -1,4 +1,4 @@
-Day 3: No Matter How You Slice It
+# Day 3: No Matter How You Slice It
 
 ## Part 1
 
