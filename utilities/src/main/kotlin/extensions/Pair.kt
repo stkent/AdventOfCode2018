@@ -2,7 +2,7 @@
 
 package extensions
 
-fun <T, U> Pair<T, U>.flip(): Pair<U, T> = Pair(second, first)
+fun <T, U> Pair<T, U>.flip(): Pair<U, T> = second to first
 
 fun <T : Comparable<T>> Pair<T, T>.max() = maxOf(first, second)
 

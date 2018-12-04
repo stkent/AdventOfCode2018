@@ -8,7 +8,7 @@ class FlipTests : BehaviorSpec({
 
     Given("a pair (a, a)") {
         val a = 1
-        val pair = Pair(a, a)
+        val pair = a to a
 
         When("we extensions.flip the pair") {
             val flippedPair = pair.flip()
@@ -23,13 +23,13 @@ class FlipTests : BehaviorSpec({
         val a = 1
         val b = "2"
 
-        val pair = Pair(a, b)
+        val pair = a to b
 
         When("we extensions.flip the pair") {
             val flippedPair = pair.flip()
 
             Then("the result should be the pair (b, a)") {
-                flippedPair shouldBe Pair(b, a)
+                flippedPair shouldBe (b to a)
             }
         }
     }
