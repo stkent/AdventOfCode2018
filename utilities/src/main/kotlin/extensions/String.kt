@@ -2,6 +2,17 @@
 
 package extensions
 
+// Extracts all the discrete integers from a string.
+// For example, "#1372 @ 865,426: 27x15".extractInts() = [1372, 865, 426, 27, 15].
+fun String.extractInts(): List<Int> {
+    val delimiter = "/"
+
+    return replace(Regex("[^\\d]+"), delimiter)
+        .split(delimiter)
+        .filter(CharSequence::isNotEmpty)
+        .map(String::toInt)
+}
+
 // https://en.wikipedia.org/wiki/Hamming_distance
 fun String.hammingDistanceFrom(other: String): Int {
     check(length == other.length) {

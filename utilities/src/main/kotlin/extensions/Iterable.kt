@@ -44,6 +44,8 @@ fun <T> Iterable<T>.firstRepeat(targetCount: Int): T? {
 
 fun <T> Iterable<T>.head() = first()
 
+infix fun <T> Iterable<T>.intersects(other: Iterable<T>) = intersect(other).isNotEmpty()
+
 // Returns a finite Sequence that loops through the original iterable the specified number of times.
 fun <T> Iterable<T>.repeat(times: Int): Sequence<T> {
     if (!iterator().hasNext()) return emptySequence()
