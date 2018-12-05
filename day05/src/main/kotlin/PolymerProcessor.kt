@@ -1,30 +1,31 @@
+import java.util.*
+import kotlin.math.abs
+
 class PolymerProcessor {
 
     fun fullyReact(polymer: String): String {
-        val replacementRegex = ('a'..'z')
-            .flatMap { char ->
-                val upperChar = char.toUpperCase()
-                return@flatMap listOf("$char$upperChar", "$upperChar$char")
+        val result = ArrayDeque<Char>()
+
+        polymer.forEach { unit ->
+            if (result.peekLast()?.reactsWith(unit) == true) {
+                result.removeLast()
+            } else {
+                result.addLast(unit)
             }
-            .joinToString(separator = "|").toRegex()
-
-        var result = polymer
-
-        while (true) {
-            val updatedResult = result.replace(replacementRegex, "")
-            if (updatedResult == result) break
-            result = updatedResult
         }
 
-        return result
+        return result.joinToString(separator = "")
     }
 
     fun optimizeAndFullyReact(polymer: String): String {
         return ('a'..'z')
-            .map { char -> "$char|${char.toUpperCase()}".toRegex() }
-            .map { regex -> polymer.replace(regex, "") }
-            .map { s -> fullyReact(s) }
-            .minBy { it.length }!!
+            .map { unitTypeToRemove -> polymer.filterNot { unit -> unit.isSameUnitType(unitTypeToRemove) } }
+            .map(::fullyReact)
+            .minBy(String::length)!!
     }
 
 }
+
+fun Char.reactsWith(other: Char) = abs(this - other) == 32
+
+fun Char.isSameUnitType(other: Char) = (this - other) % 32 == 0
