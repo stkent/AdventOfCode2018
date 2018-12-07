@@ -8,6 +8,18 @@ data class GridPoint2d(val x: Int, val y: Int) {
 
     companion object {
         val origin = GridPoint2d(0, 0)
+
+        fun region(minX: Int, maxX: Int, minY: Int, maxY: Int): List<GridPoint2d> {
+            val result = mutableListOf<GridPoint2d>()
+
+            for (y in minY..maxY) {
+                for (x in minX..maxX) {
+                    result.add(GridPoint2d(x, y))
+                }
+            }
+
+            return result
+        }
     }
 
     operator fun plus(vector: GridVector2d) = GridPoint2d(x + vector.x, y + vector.y)

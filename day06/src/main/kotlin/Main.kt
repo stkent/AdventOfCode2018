@@ -1,53 +1,57 @@
 import extensions.extractInts
 
 fun main() {
-    val input = resourceFile("input.txt")
-        .readLines()
-        .map {
-            val coords = it.extractInts()
-            GridPoint2d(x = coords.first(), y = coords.last())
-        }
+    val input = resourceFile("input.txt").readLines()
 
-    val minX = input.map { it.x }.min()!!
-    val maxX = input.map { it.x }.max()!!
-    val minY = input.map { it.y }.min()!!
-    val maxY = input.map { it.y }.max()!!
-
-    val countMap = mutableMapOf<GridPoint2d, List<GridPoint2d>>()
-
-    for (x in minX..maxX) {
-        for (y in minY..maxY) {
-            val target = GridPoint2d(x = x, y = y)
-            val distances = input.map { it to it.l1DistanceTo(target) }
-                .sortedBy { it.second }
-
-            val closest = distances[0]
-            val secondClosest = distances[1]
-
-            if (closest.second < secondClosest.second) {
-                countMap[closest.first] = countMap[closest.first].orEmpty() + target
-            }
-        }
+    val targetPoints = input.map { string ->
+        string.extractInts().run { GridPoint2d(x = first(), y = last()) }
     }
 
-    val s = countMap
-        .filterNot { it.value.any { it.x == minX || it.x == maxY || it.y == minY || it.y == maxY } }
-        .mapValues { (_, v) -> v.count() }
+    val targetXs = targetPoints.map(GridPoint2d::x)
+    val targetYs = targetPoints.map(GridPoint2d::y)
+    val minTargetX = targetXs.min()!!
+    val maxTargetX = targetXs.max()!!
+    val minTargetY = targetYs.min()!!
+    val maxTargetY = targetYs.max()!!
 
+    val nearbyPoints = GridPoint2d.region(
+        minX = minTargetX,
+        maxX = maxTargetX,
+        minY = minTargetY,
+        maxY = maxTargetY)
 
-    println(s.maxBy { it.value })
-
-    var regionSize = 0
-
-    for (x in minX..maxX) {
-        for (y in minY..maxY) {
-            val target = GridPoint2d(x = x, y = y)
-
-            if (input.sumBy { it.l1DistanceTo(target) } < 10000) {
-                regionSize++
-            }
+    val largestFiniteTargetRegion = nearbyPoints
+        .groupBy { nearbyPoint -> targetPoints.uniquePointClosestTo(nearbyPoint) }
+        .filterValues { targetRegion ->
+            targetRegion.isWithinBounds(minTargetX + 1 until maxTargetX, minTargetY + 1 until maxTargetY)
         }
+        .map { (_, targetRegionPoints) -> targetRegionPoints.count() }
+        .max()!!
+
+    // part 1
+
+    println(largestFiniteTargetRegion)
+
+    // part 2
+
+    val regionSize = nearbyPoints.count { nearbyPoint ->
+        targetPoints.sumBy { it.l1DistanceTo(nearbyPoint) } < 10000
     }
 
     println(regionSize)
+}
+
+fun Collection<GridPoint2d>.uniquePointClosestTo(other: GridPoint2d): GridPoint2d? {
+    val pointDistances = this
+        .map { otherPoint -> otherPoint to otherPoint.l1DistanceTo(other) }
+        .sortedBy { (_, distance) -> distance }
+
+    val (closestPoint, shortestDistance) = pointDistances[0]
+    val (_, secondShortestDistance) = pointDistances[1]
+
+    return if (shortestDistance < secondShortestDistance) closestPoint else null
+}
+
+fun Collection<GridPoint2d>.isWithinBounds(xBounds: IntRange, yBounds: IntRange): Boolean {
+    return this.all { point -> point.inBounds(xBounds, yBounds) }
 }
