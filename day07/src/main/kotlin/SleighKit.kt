@@ -50,7 +50,7 @@ class SleighKit(instructions: List<String>) {
         return@lazy doneSteps.joinToString(separator = "")
     }
 
-    fun timeToComplete(workerCount: Int): Int {
+    fun timeToComplete(workerCount: Int, stepTime: (Char) -> Int): Int {
         // State
 
         val doneSteps = mutableListOf<Char>()
@@ -94,7 +94,7 @@ class SleighKit(instructions: List<String>) {
 
             repeat(newAssignmentCount) {
                 val queuedStep = queuedSteps.pollFirst()
-                val queuedStepDuration = (60 + queuedStep.toInt() - 'A'.toInt() + 1)
+                val queuedStepDuration = stepTime(queuedStep)
                 inProgressSteps[queuedStep] = queuedStepDuration
             }
         }

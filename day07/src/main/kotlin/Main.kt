@@ -4,5 +4,5 @@ fun main() {
     val sleighKit = SleighKit(instructions = input)
 
     println("Part 1 solution: ${sleighKit.stepOrder}")
-    println("Part 2 solution: ${sleighKit.timeToComplete(workerCount = 5)}")
+    println("Part 2 solution: ${sleighKit.timeToComplete(workerCount = 5, stepTime = { it - 'A' + 61 })}")
 }
