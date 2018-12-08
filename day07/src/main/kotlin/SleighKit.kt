@@ -5,15 +5,13 @@ import kotlin.math.min
 class SleighKit(instructions: List<String>) {
 
     private val instructionGraph: Graph<Char> by lazy {
-        val steps = instructions.map {
-            val regex = "Step (\\w) must be finished before step (\\w) can begin.".toRegex()
-            val (step1, step2) = regex.matchEntire(it)!!.destructured
-            return@map step1.first() to step2.first()
+        GraphBuilder.directed().build<Char>().apply {
+            instructions.forEach {
+                val regex = "Step (\\w) must be finished before step (\\w) can begin.".toRegex()
+                val (step1, step2) = regex.matchEntire(it)!!.destructured
+                this.putEdge(step1.first(), step2.first())
+            }
         }
-
-        val graph = GraphBuilder.directed().build<Char>()
-        steps.forEach { (step1, step2) -> graph.putEdge(step1, step2) }
-        return@lazy graph
     }
 
     private val firstInstruction: Char by lazy {
