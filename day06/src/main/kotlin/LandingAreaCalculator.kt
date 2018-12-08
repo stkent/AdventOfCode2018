@@ -35,9 +35,9 @@ class LandingAreaCalculator(rawTargetPoints: List<String>) {
             .max()!!
     }
 
-    val safeArea2: Int by lazy {
-        nearbyPoints.count { nearbyPoint ->
-            targetPoints.sumBy { it.l1DistanceTo(nearbyPoint) } < 10000
+    fun safeArea2(distanceThreshold: Int): Int {
+        return nearbyPoints.count { nearbyPoint ->
+            targetPoints.sumBy { it.l1DistanceTo(nearbyPoint) } < distanceThreshold
         }
     }
 
