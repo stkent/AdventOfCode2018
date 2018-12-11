@@ -53,7 +53,7 @@ class LightTrackerTest : StringSpec({
 
         val expected = LightTracker.MessageData(sky = expectedSky, time = expectedTime)
 
-        LightTracker().findMessage(rawInitialLights = input, messageHeight = 7) shouldBe expected
+        LightTracker().findMessage(rawInitialLights = input, fontHeight = 7) shouldBe expected
     }
 
 })

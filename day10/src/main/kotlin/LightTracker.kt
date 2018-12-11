@@ -2,7 +2,7 @@ class LightTracker {
 
     data class MessageData(val sky: List<String>, val time: Int)
 
-    fun findMessage(rawInitialLights: List<String>, messageHeight: Int): MessageData {
+    fun findMessage(rawInitialLights: List<String>, fontHeight: Int): MessageData {
         var lights = rawInitialLights.map(SpatialData.Companion::fromString)
 
         var second = 0
@@ -18,7 +18,7 @@ class LightTracker {
             val minY = ys.min()!!
             val maxY = ys.max()!!
 
-            if (maxY - minY <= messageHeight) {
+            if (maxY - minY <= fontHeight) {
                 val xs = lightPositions.map(GridPoint2d::x)
 
                 val sky = (minY..maxY).map { y ->
