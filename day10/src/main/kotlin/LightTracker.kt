@@ -12,7 +12,7 @@ class LightTracker {
 
             lights = lights.map { light -> light.copy(position = light.position + light.velocity) }
 
-            val lightPositions = lights.map(SpatialData::position)
+            val lightPositions = lights.map(SpatialData::position).toSet()
 
             val ys = lightPositions.map(GridPoint2d::y)
             val minY = ys.min()!!
