@@ -3,7 +3,7 @@ import io.kotlintest.specs.StringSpec
 
 class LightTrackerTest : StringSpec({
 
-    "Metadata sum" {
+    "Message" {
         val input = listOf(
             "position=< 9,  1> velocity=< 0,  2>",
             "position=< 7,  0> velocity=<-1,  0>",
