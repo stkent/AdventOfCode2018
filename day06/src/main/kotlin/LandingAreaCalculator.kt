@@ -55,5 +55,5 @@ private fun Collection<GridPoint2d>.uniquePointClosestTo(other: GridPoint2d): Gr
 }
 
 private fun Collection<GridPoint2d>.isWithinBounds(xBounds: IntRange, yBounds: IntRange): Boolean {
-    return this.all { point -> point.inBounds(xBounds, yBounds) }
+    return this.all { point -> point.isInBounds(xBounds, yBounds) }
 }

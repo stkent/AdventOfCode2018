@@ -34,7 +34,7 @@ data class GridPoint2d(val x: Int, val y: Int) {
 
     fun lInfDistanceTo(other: GridPoint2d) = max(abs(x - other.x), abs(y - other.y))
 
-    fun inBounds(
+    fun isInBounds(
             xBounds: IntRange = Int.MIN_VALUE..Int.MAX_VALUE,
             yBounds: IntRange = Int.MIN_VALUE..Int.MAX_VALUE
     ): Boolean {
