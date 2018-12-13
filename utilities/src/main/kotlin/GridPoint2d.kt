@@ -42,4 +42,8 @@ data class GridPoint2d(val x: Int, val y: Int) {
         return x in xBounds && y in yBounds
     }
 
+    fun offsetBy(xOff: Int = 0, yOff: Int = 0): GridPoint2d {
+        return copy(x = x + xOff, y = y + yOff)
+    }
+
 }
