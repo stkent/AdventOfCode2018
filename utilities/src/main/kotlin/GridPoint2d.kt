@@ -12,21 +12,20 @@ data class GridPoint2d(val x: Int, val y: Int) {
 
     operator fun plus(vector: GridVector2d) = GridPoint2d(x + vector.x, y + vector.y)
 
-    fun neighbors4(): Set<GridPoint2d> = setOf(
+    fun adjacentPoints(): Set<GridPoint2d> = setOf(
             GridPoint2d(x + 1, y),
             GridPoint2d(x - 1, y),
             GridPoint2d(x, y + 1),
             GridPoint2d(x, y - 1)
     )
 
-    fun neighbors8(): Set<GridPoint2d> = neighbors4().union(
-            setOf(
-                    GridPoint2d(x + 1, y + 1),
-                    GridPoint2d(x + 1, y - 1),
-                    GridPoint2d(x - 1, y - 1),
-                    GridPoint2d(x - 1, y + 1)
-            )
-    )
+    fun flipX(): GridPoint2d {
+        return copy(x = -x)
+    }
+
+    fun flipY(): GridPoint2d {
+        return copy(y = -y)
+    }
 
     fun l1DistanceTo(other: GridPoint2d) = abs(x - other.x) + abs(y - other.y)
 
@@ -45,5 +44,14 @@ data class GridPoint2d(val x: Int, val y: Int) {
     fun offsetBy(xOff: Int = 0, yOff: Int = 0): GridPoint2d {
         return copy(x = x + xOff, y = y + yOff)
     }
+
+    fun surroundingPoints(): Set<GridPoint2d> = adjacentPoints().union(
+        setOf(
+            GridPoint2d(x + 1, y + 1),
+            GridPoint2d(x + 1, y - 1),
+            GridPoint2d(x - 1, y - 1),
+            GridPoint2d(x - 1, y + 1)
+        )
+    )
 
 }
