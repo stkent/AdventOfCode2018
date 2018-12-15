@@ -4,6 +4,20 @@ package extensions
 
 import kotlin.math.max
 
+// Base 10
+fun Int.digits(): List<Int> {
+    var remainder = this
+
+    val result = mutableListOf<Int>()
+
+    do {
+        result.add(index = 0, element = remainder % 10)
+        remainder /= 10
+    } while (remainder > 0)
+
+    return result
+}
+
 fun Int.isNotPrime() = !isPrime()
 
 fun Int.isPalindrome() = toString().isPalindrome()
