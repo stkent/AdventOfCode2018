@@ -1,43 +1,6 @@
 fun main() {
     val input = resourceFile("input.txt").readLines()
 
-//    val input = listOf(
-//        "|",
-//        "v",
-//        "|",
-//        "|",
-//        "|",
-//        "^",
-//        "|"
-//    )
-
-//    val input = listOf(
-//        """/->-\        """,
-//        """|   |  /----\""",
-//        """| /-+--+-\  |""",
-//        """| | |  | v  |""",
-//        """\-+-/  \-+--/""",
-//        """\------/     """
-//    )
-
-//    val input = listOf(
-//        """/>-<\  """,
-//        """|   |  """,
-//        """| /<+-\""",
-//        """| | | v""",
-//        """\>+</ |""",
-//        """  |   ^""",
-//        """  \<->/"""
-//    )
-
-//    val input = listOf(
-//        ">-<"
-//    )
-
-//    val input = listOf(
-//        "><"
-//    )
-
     val mine = Mine(rawMap = input)
 
     val crashData = mine.computeCrashData()
