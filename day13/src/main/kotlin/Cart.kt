@@ -2,7 +2,11 @@ import Direction.*
 import Turn.LEFT
 import Turn.RIGHT
 
-class Cart(var position: GridPoint2d, var direction: Direction) {
+data class Cart(
+    var position: GridPoint2d,
+    var direction: Direction,
+    var crashed: Boolean = false,
+    var intersectionCount: Int = 0) {
 
     companion object {
         fun direction(char: Char): Direction? {
@@ -18,9 +22,6 @@ class Cart(var position: GridPoint2d, var direction: Direction) {
         }
     }
 
-    var hasCrashed = false
-        private set
-
     val nextIntersectionTurn: Turn?
         get() {
             return when (intersectionCount % 3) {
@@ -32,19 +33,9 @@ class Cart(var position: GridPoint2d, var direction: Direction) {
             }
         }
 
-    private var intersectionCount = 0
-
     fun advance(): Cart {
         position += direction.toVector()
         return this
-    }
-
-    fun didCrash() {
-        hasCrashed = true
-    }
-
-    fun didPassThroughIntersection() {
-        intersectionCount++
     }
 
 }

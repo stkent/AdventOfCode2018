@@ -5,6 +5,7 @@ import Turn.RIGHT
 class Mine(rawMap: List<String>) {
 
     data class CrashData(val crashes: List<GridPoint2d>, val lastCart: GridPoint2d?)
+    private data class State(val carts: List<Cart>, val crashes: List<GridPoint2d>)
 
     private val tracks: List<List<Char>> by lazy {
         return@lazy rawMap.map { row ->
@@ -16,9 +17,7 @@ class Mine(rawMap: List<String>) {
         }
     }
 
-    private val crashes = mutableListOf<GridPoint2d>()
-
-    private val allCarts = rawMap
+    private val cartsInitial = rawMap
         .withIndex()
         .flatMap { (y, row) ->
             //@formatter:off
@@ -32,34 +31,41 @@ class Mine(rawMap: List<String>) {
         }
 
     fun computeCrashData(): CrashData {
-        while (allCarts.filterNot(Cart::hasCrashed).size > 1) {
-            advance()
+        var state = State(carts = cartsInitial.map { it.copy() }, crashes = emptyList())
+
+        while (state.carts.filterNot(Cart::crashed).size > 1) {
+            state = advance(state)
         }
 
         return CrashData(
-            crashes = crashes.map(GridPoint2d::flipY),
-            lastCart = allCarts.filterNot(Cart::hasCrashed).firstOrNull()?.position?.flipY()
+            crashes = state.crashes.map(GridPoint2d::flipY),
+            lastCart = state.carts.filterNot(Cart::crashed).firstOrNull()?.position?.flipY()
         )
     }
 
-    private fun advance() {
-        val cartsToAdvance = allCarts
-            .filterNot(Cart::hasCrashed)
+    private fun advance(state: State): State {
+        val carts = state
+            .carts
+            .filterNot(Cart::crashed)
             .sortedWith(compareByDescending<Cart> { it.position.y }.thenBy { it.position.x })
 
-        for (cart in cartsToAdvance) {
+        val crashes = state.crashes.toMutableList()
+
+        for (cart in carts) {
             cart.advance()
 
-            val hitCart = (cartsToAdvance - cart).firstOrNull { it.position == cart.position }
+            val hitCart = (carts - cart).firstOrNull { it.position == cart.position }
             if (hitCart != null) {
-                cart.didCrash()
-                hitCart.didCrash()
+                cart.crashed = true
+                hitCart.crashed = true
                 crashes.add(cart.position)
                 continue
             }
 
             rotateCart(cart, track = tracks[-cart.position.y][cart.position.x])
         }
+
+        return State(carts, crashes)
     }
 
     private fun rotateCart(cart: Cart, track: Char) {
@@ -87,7 +93,7 @@ class Mine(rawMap: List<String>) {
                         //@formatter:on
                 }
 
-                cart.didPassThroughIntersection()
+                cart.intersectionCount++
             }
         }
     }
