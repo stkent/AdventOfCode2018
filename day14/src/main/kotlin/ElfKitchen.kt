@@ -1,8 +1,10 @@
 import extensions.digits
 
-class ElfKitchen(private val initialScores: List<Int>) {
+class ElfKitchen {
 
     data class ElfPositions(val elf1: Int, val elf2: Int)
+
+    private val initialScores = listOf(3, 7)
 
     fun tenScoresAfterRecipeCount(count: Int): String {
         val scores = initialScores.toMutableList()
