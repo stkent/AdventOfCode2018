@@ -7,7 +7,7 @@ fun <T, U> Map<T, List<U>>.uniquePairings(): Map<T, U>? {
     while (remaining.isNotEmpty()) {
         val (key, value) = remaining
             .filter { (_, values) -> values.count() == 1 }
-            .mapValues { (_, values) -> values.first() }
+            .mapValues { (_, values) -> values.single() }
             .entries
             .firstOrNull() ?: return null
 
