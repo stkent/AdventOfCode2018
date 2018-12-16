@@ -10,10 +10,11 @@ class Battle(private val rawMap: List<String>) {
         fun findAttackLocations(
             foeLocations: List<GridPoint2d>,
             liveWarriorLocations: List<GridPoint2d>,
-            cavern: List<String>): List<GridPoint2d>
-        {
+            cavern: List<String>
+        ): List<GridPoint2d> {
+
             return foeLocations
-                .flatMap { it.adjacentPoints() }
+                .flatMap(GridPoint2d::adjacentPoints)
                 .toSet()
                 .filterNot { location -> cavern[location.y][location.x] == '█' }
                 .filterNot { location -> location in liveWarriorLocations }
@@ -28,6 +29,18 @@ class Battle(private val rawMap: List<String>) {
                 .sortedWith(compareBy(Warrior::hp).thenBy { it.location.y }.thenBy { it.location.x })
                 .firstOrNull()
         }
+
+        fun findNextLocation(
+            warriorLocation: GridPoint2d,
+            attackLocations: List<GridPoint2d>,
+            cavern: List<String>
+        ): GridPoint2d? {
+
+            // todo: this
+            return null
+        }
+
+        // components of find next location
     }
 
     private val cavern: List<String> by lazy {
@@ -60,6 +73,8 @@ class Battle(private val rawMap: List<String>) {
 
             for (warrior in roundWarriors) {
                 val turnWarriors = roundWarriors.filter(Warrior::isAlive)
+
+                // If warrior has already died during this round, there's nothing to do; advance to next warrior.
                 if (warrior !in turnWarriors) continue
 
                 val foes = findFoes(warrior, candidates = turnWarriors - warrior)
@@ -73,24 +88,20 @@ class Battle(private val rawMap: List<String>) {
                     continue
                 }
 
-                // move
                 val attackLocations = findAttackLocations(
                     foeLocations = foes.map(Warrior::location),
                     liveWarriorLocations = turnWarriors.map(Warrior::location),
-                    cavern = cavern)
+                    cavern = cavern
+                )
 
-                println(attackLocations)
+                if (attackLocations.isEmpty()) continue
 
-                val closestLocation = closestLocation(warrior, locations = attackLocations)
+                findNextLocation(warrior.location, attackLocations, cavern)
+                    ?.let { warrior.location = it }
                     ?: continue
 
-                println(closestLocation)
-
-                // move towards closest location
-
-                findFoeToAttack(warrior.location, foes)?.let { newFoeToAttack ->
-                    warrior.attack(newFoeToAttack)
-                }
+                findFoeToAttack(warrior.location, foes)
+                    ?.let { warrior.attack(it) }
             }
 
             round++
@@ -100,17 +111,17 @@ class Battle(private val rawMap: List<String>) {
         return Result(rounds = round, remainingHp = 1)
     }
 
-    private fun closestLocation(warrior: Warrior, locations: Collection<GridPoint2d>): GridPoint2d? {
-        return locations
-            .groupBy { location -> distanceBetween(warrior.location, end = location) }
-            .filterKeys { it != null }
-            .minBy { (distance, _) -> distance!! }!!
-            .value
-            .firstOrNull()
-    }
-
-    private fun distanceBetween(start: GridPoint2d, end: GridPoint2d): Int? {
-        return 0
-    }
+//    private fun closestLocation(warrior: Warrior, locations: Collection<GridPoint2d>): GridPoint2d? {
+//        return locations
+//            .groupBy { location -> distanceBetween(warrior.location, end = location) }
+//            .filterKeys { it != null }
+//            .minBy { (distance, _) -> distance!! }!!
+//            .value
+//            .firstOrNull()
+//    }
+//
+//    private fun distanceBetween(start: GridPoint2d, end: GridPoint2d): Int? {
+//        return 0
+//    }
 
 }
