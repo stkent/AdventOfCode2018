@@ -213,4 +213,369 @@ class BattleTest : StringSpec({
         ) shouldBe null
     }
 
+
+
+
+    // new tests!
+
+
+
+
+    // ███████
+    // █..@..█
+    // █.@E@.█
+    // █..+..█
+    // █.....█
+    // █..G..█
+    // ███████
+    //
+    "Warrior moves directly up towards nearest foe if unobstructed" {
+        val inputWarriorLocation = GridPoint2d(x = 3, y = 5)
+
+        val inputAttackLocations = listOf(
+            GridPoint2d(x = 3, y = 1),
+            GridPoint2d(x = 2, y = 2),
+            GridPoint2d(x = 4, y = 2),
+            GridPoint2d(x = 3, y = 3)
+        )
+
+        val inputCavern = listOf(
+            "███████",
+            "█.....█",
+            "█.....█",
+            "█.....█",
+            "█.....█",
+            "█.....█",
+            "███████"
+        )
+
+        Battle.findNextLocation(
+            warriorLocation = inputWarriorLocation,
+            attackLocations = inputAttackLocations,
+            cavern = inputCavern
+        ) shouldBe GridPoint2d(x = 3, y = 4)
+    }
+
+    // ███████
+    // █.....█
+    // █.@...█
+    // █@E+.G█
+    // █.@...█
+    // █.....█
+    // ███████
+    //
+    "Warrior moves directly left towards nearest foe if unobstructed" {
+        val inputWarriorLocation = GridPoint2d(x = 5, y = 3)
+
+        val inputAttackLocations = listOf(
+            GridPoint2d(x = 2, y = 2),
+            GridPoint2d(x = 1, y = 3),
+            GridPoint2d(x = 3, y = 3),
+            GridPoint2d(x = 2, y = 4)
+        )
+
+        val inputCavern = listOf(
+            "███████",
+            "█.....█",
+            "█.....█",
+            "█.....█",
+            "█.....█",
+            "█.....█",
+            "███████"
+        )
+
+        Battle.findNextLocation(
+            warriorLocation = inputWarriorLocation,
+            attackLocations = inputAttackLocations,
+            cavern = inputCavern
+        ) shouldBe GridPoint2d(x = 4, y = 3)
+    }
+
+    // ███████
+    // █.....█
+    // █...@.█
+    // █G.+E@█
+    // █...@.█
+    // █.....█
+    // ███████
+    //
+    "Warrior moves directly right towards nearest foe if unobstructed" {
+        val inputWarriorLocation = GridPoint2d(x = 1, y = 3)
+
+        val inputAttackLocations = listOf(
+            GridPoint2d(x = 4, y = 2),
+            GridPoint2d(x = 3, y = 3),
+            GridPoint2d(x = 5, y = 3),
+            GridPoint2d(x = 4, y = 4)
+        )
+
+        val inputCavern = listOf(
+            "███████",
+            "█.....█",
+            "█.....█",
+            "█.....█",
+            "█.....█",
+            "█.....█",
+            "███████"
+        )
+
+        Battle.findNextLocation(
+            warriorLocation = inputWarriorLocation,
+            attackLocations = inputAttackLocations,
+            cavern = inputCavern
+        ) shouldBe GridPoint2d(x = 2, y = 3)
+    }
+
+    // ███████
+    // █..G..█
+    // █.....█
+    // █..+..█
+    // █.@E@.█
+    // █..@..█
+    // ███████
+    //
+    "Warrior moves directly down towards nearest foe if unobstructed" {
+        val inputWarriorLocation = GridPoint2d(x = 3, y = 1)
+
+        val inputAttackLocations = listOf(
+            GridPoint2d(x = 3, y = 3),
+            GridPoint2d(x = 2, y = 4),
+            GridPoint2d(x = 4, y = 4),
+            GridPoint2d(x = 3, y = 5)
+        )
+
+        val inputCavern = listOf(
+            "███████",
+            "█.....█",
+            "█.....█",
+            "█.....█",
+            "█.....█",
+            "█.....█",
+            "███████"
+        )
+
+        Battle.findNextLocation(
+            warriorLocation = inputWarriorLocation,
+            attackLocations = inputAttackLocations,
+            cavern = inputCavern
+        ) shouldBe GridPoint2d(x = 3, y = 2)
+    }
+
+    // ██████
+    // █G█E?█
+    // ██████
+    //
+    "Warrior does not move if obstructed by walls" {
+        val inputWarriorLocation = GridPoint2d(x = 1, y = 1)
+
+        val inputAttackLocations = listOf(
+            GridPoint2d(x = 3, y = 1)
+        )
+
+        val inputCavern = listOf(
+            "██████",
+            "█.█..█",
+            "██████"
+        )
+
+        Battle.findNextLocation(
+            warriorLocation = inputWarriorLocation,
+            attackLocations = inputAttackLocations,
+            cavern = inputCavern
+        ) shouldBe null
+    }
+
+    // ██████
+    // █GGE?█
+    // ██████
+    //
+    "Warrior does not move if obstructed by comrade" {
+        val inputWarriorLocation = GridPoint2d(x = 1, y = 1)
+
+        val inputAttackLocations = listOf(
+            GridPoint2d(x = 3, y = 1)
+        )
+
+        val inputCavern = listOf(
+            "██████",
+            "█....█",
+            "██████"
+        )
+
+        Battle.findNextLocation(
+            warriorLocation = inputWarriorLocation,
+            attackLocations = inputAttackLocations,
+            cavern = inputCavern
+        ) shouldBe null
+    }
+
+    // ███████
+    // █...+.█
+    // █G█!E@█
+    // █...!.█
+    // ███████
+    //
+    "Warrior prefers moving up rather than down if the routes are the same length" {
+        val inputWarriorLocation = GridPoint2d(x = 1, y = 2)
+
+        val inputAttackLocations = listOf(
+            GridPoint2d(x = 4, y = 1),
+            GridPoint2d(x = 3, y = 2),
+            GridPoint2d(x = 5, y = 2),
+            GridPoint2d(x = 4, y = 3)
+        )
+
+        val inputCavern = listOf(
+            "███████",
+            "█.....█",
+            "█.█...█",
+            "█.....█",
+            "███████"
+        )
+
+        Battle.findNextLocation(
+            warriorLocation = inputWarriorLocation,
+            attackLocations = inputAttackLocations,
+            cavern = inputCavern
+        ) shouldBe GridPoint2d(x = 1, y = 1)
+    }
+
+    // ███████
+    // █.....█
+    // █.█.@.█
+    // █G█+E@█
+    // █...!.█
+    // ███████
+    //
+    "Warrior prefers moving down if the route when traveling up is longer" {
+        val inputWarriorLocation = GridPoint2d(x = 1, y = 3)
+
+        val inputAttackLocations = listOf(
+            GridPoint2d(x = 4, y = 2),
+            GridPoint2d(x = 3, y = 3),
+            GridPoint2d(x = 5, y = 3),
+            GridPoint2d(x = 4, y = 4)
+        )
+
+        val inputCavern = listOf(
+            "███████",
+            "█.....█",
+            "█.█...█",
+            "█.█...█",
+            "█.....█",
+            "███████"
+        )
+
+        Battle.findNextLocation(
+            warriorLocation = inputWarriorLocation,
+            attackLocations = inputAttackLocations,
+            cavern = inputCavern
+        ) shouldBe GridPoint2d(x = 1, y = 4)
+    }
+
+    // █████
+    // █.G.█
+    // █.█.█
+    // █.+.█
+    // █!E!█
+    // █.@.█
+    // █████
+    //
+    "Warrior prefers moving left rather than right if the routes are the same length" {
+        val inputWarriorLocation = GridPoint2d(x = 2, y = 1)
+
+        val inputAttackLocations = listOf(
+            GridPoint2d(x = 2, y = 3),
+            GridPoint2d(x = 1, y = 4),
+            GridPoint2d(x = 3, y = 4),
+            GridPoint2d(x = 2, y = 5)
+        )
+
+        val inputCavern = listOf(
+            "█████",
+            "█...█",
+            "█.█.█",
+            "█...█",
+            "█...█",
+            "█...█",
+            "█████"
+        )
+
+        Battle.findNextLocation(
+            warriorLocation = inputWarriorLocation,
+            attackLocations = inputAttackLocations,
+            cavern = inputCavern
+        ) shouldBe GridPoint2d(x = 1, y = 1)
+    }
+
+    // ██████
+    // █..G.█
+    // █.██.█
+    // █..+.█
+    // █.@E!█
+    // █..@.█
+    // ██████
+    //
+    "Warrior prefers moving right if the route when traveling left is longer" {
+        val inputWarriorLocation = GridPoint2d(x = 3, y = 1)
+
+        val inputAttackLocations = listOf(
+            GridPoint2d(x = 3, y = 3),
+            GridPoint2d(x = 2, y = 4),
+            GridPoint2d(x = 4, y = 4),
+            GridPoint2d(x = 3, y = 5)
+        )
+
+        val inputCavern = listOf(
+            "██████",
+            "█....█",
+            "█.██.█",
+            "█....█",
+            "█....█",
+            "█....█",
+            "██████"
+        )
+
+        Battle.findNextLocation(
+            warriorLocation = inputWarriorLocation,
+            attackLocations = inputAttackLocations,
+            cavern = inputCavern
+        ) shouldBe GridPoint2d(x = 4, y = 1)
+    }
+
+    // ████████
+    // █......█
+    // █.█..+.█
+    // █.G█!E@█
+    // █.█..!.█
+    // █......█
+    // ████████
+    //
+    "Warrior moves away from target if necessary" {
+        val inputWarriorLocation = GridPoint2d(x = 2, y = 3)
+
+        val inputAttackLocations = listOf(
+            GridPoint2d(x = 5, y = 2),
+            GridPoint2d(x = 4, y = 3),
+            GridPoint2d(x = 6, y = 3),
+            GridPoint2d(x = 5, y = 4)
+        )
+
+        val inputCavern = listOf(
+            "████████",
+            "█......█",
+            "█.█....█",
+            "█..█...█",
+            "█.█....█",
+            "█......█",
+            "████████"
+        )
+
+        Battle.findNextLocation(
+            warriorLocation = inputWarriorLocation,
+            attackLocations = inputAttackLocations,
+            cavern = inputCavern
+        ) shouldBe GridPoint2d(x = 1, y = 3)
+    }
+
 })
