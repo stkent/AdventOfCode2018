@@ -41,8 +41,8 @@ data class GridPoint2d(val x: Int, val y: Int) {
         return x in xBounds && y in yBounds
     }
 
-    fun offsetBy(xOff: Int = 0, yOff: Int = 0): GridPoint2d {
-        return copy(x = x + xOff, y = y + yOff)
+    fun offsetBy(dx: Int = 0, dy: Int = 0): GridPoint2d {
+        return copy(x = x + dx, y = y + dy)
     }
 
     fun surroundingPoints(): Set<GridPoint2d> = adjacentPoints().union(

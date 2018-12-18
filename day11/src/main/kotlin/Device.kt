@@ -16,9 +16,9 @@ class Device(private val serialNumber: Int) {
         allPoints.forEach { cell ->
             //@formatter:off
             val current  = cellPower(cell)
-            val leftSum  = result.getOrDefault(cell.offsetBy(xOff = -1), 0)
-            val aboveSum = result.getOrDefault(cell.offsetBy(yOff = -1), 0)
-            val dupeSum  = result.getOrDefault(cell.offsetBy(xOff = -1, yOff = -1), 0)
+            val leftSum  = result.getOrDefault(cell.offsetBy(dx = -1), 0)
+            val aboveSum = result.getOrDefault(cell.offsetBy(dy = -1), 0)
+            val dupeSum  = result.getOrDefault(cell.offsetBy(dx = -1, dy = -1), 0)
             //@formatter:on
 
             result[cell] = current + leftSum + aboveSum - dupeSum
