@@ -1,0 +1,55 @@
+ 0: addi 4 16 4    goto 17
+
+   1: seti 1  _ 1    r[1] = 1                       // (3) Initialize C = candidate divisor of T
+
+     2: seti 1  _ 3    r[3] = 1                     // (4) Initialize M = multiplier
+       
+       3: mulr 1  3 2    r[2] = r[1] * r[3]         // (5) Compute C * M
+
+       4: eqrr 2  5 2    } if (r[2] == r[5])
+       5: addr 2  4 4    }     r[0] += r[1]         // (6) If C * M == T, increase result by 1. (We found a factor of T!)
+       6: addi 4  1 4    }
+       7: addr 1  0 0    }
+
+       8: addi 3  1 3    r[3]++                     // (7) Increment M. (!Inefficient - we check larger M even after confirming C is a factor of T!)
+
+       9: gtrr 3  5 2    } if (r[3] > r[5])
+      10: addr 4  2 4    }     goto 12              // (8) If C * M now exceeds T, we do not need to check larger M.
+      11: seti 2  _ 4    } else
+                         }     goto 3               // (9) If C * M does not yet exceed T, C may still be a factor of T. Repeat checks with incremented M.
+
+    12: addi 1  1 1    } r[1]++                     // (10) Increment C.
+
+    13: gtrr 1  5 2    } if (r[1] > r[5])
+    14: addr 2  4 4    }     quit                   // If C now exceeds T, there are no more factors of T to find. End program.
+    15: seti 1  _ 4    } else
+    16: mulr 4  4 4    }     goto 2                 // If C does not yet exceed T, C may still be a factor of T. Repeat checks with incremented C.
+
+17: addi 5  2 5    } r[2] = 28
+18: mulr 5  5 5    } r[5] = 864                     // (1) T = target number, part 1
+19: mulr 4  5 5    }
+20: muli 5 11 5    }
+21: addi 2  1 2    }
+22: mulr 2  4 2    }
+23: addi 2  6 2    }
+24: addr 5  2 5    }
+
+25: addr 4  0 4    } if (r[0] == 0)
+26: seti 0  _ 4    }     goto 1
+                   } else if (r[1] == 1)
+                   }     goto 27
+
+27: setr 4  _ 2    } r[2] = 10550400
+28: mulr 2  4 2    } r[5] = 10551264                // (2) T = target number, part 2
+29: addr 4  2 2    }
+30: mulr 4  2 2    }
+31: muli 2 14 2    }
+32: mulr 2  4 2    }
+33: addr 5  2 5    }
+
+34: seti 0  _ 0    } r[0] = 0
+35: seti 0  _ 4    } goto 1
+
+
+
+Key insight: whenever r[4] is referenced in an instruction, the value is known (equal to the instruction number).
