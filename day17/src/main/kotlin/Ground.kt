@@ -44,22 +44,22 @@ class Ground(private val clay: Set<GridPoint2d>) {
 
         val splash = (clayMinY..clayMaxY)
             .asSequence()
-            .map { fall -> spring.offsetBy(dy = fall).also { wetArea.add(it) } }
-            .firstOrNull { it.offsetBy(dy = 1) in clay
+            .map { fall -> spring.shiftBy(dy = fall).also { wetArea.add(it) } }
+            .firstOrNull { it.shiftBy(dy = 1) in clay
             } ?: return wetArea + setOf(spring.copy(y = clayMaxY))
 
         var rightSteps = 1
         while (true) {
-            if (splash.offsetBy(dx = rightSteps) !in clay &&
-                splash.offsetBy(dx = rightSteps, dy = 1) in clay &&
-                splash.offsetBy(dx = rightSteps + 1, dy = 1) !in clay) {
+            if (splash.shiftBy(dx = rightSteps) !in clay &&
+                splash.shiftBy(dx = rightSteps, dy = 1) in clay &&
+                splash.shiftBy(dx = rightSteps + 1, dy = 1) !in clay) {
 
-                return wetArea + wettableArea(splash.offsetBy(dx = 2))
-            } else if (splash.offsetBy(dx = rightSteps) in clay && splash.offsetBy(dx = rightSteps, dy = 1) in clay) {
+                return wetArea + wettableArea(splash.shiftBy(dx = 2))
+            } else if (splash.shiftBy(dx = rightSteps) in clay && splash.shiftBy(dx = rightSteps, dy = 1) in clay) {
                 break
             }
 
-            wetArea.add(splash.offsetBy(dx = rightSteps))
+            wetArea.add(splash.shiftBy(dx = rightSteps))
 
             rightSteps += 1
         }
