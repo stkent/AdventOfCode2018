@@ -7,7 +7,7 @@ package extensions
 fun String.extractInts(): List<Int> {
     val delimiter = "/"
 
-    return replace(Regex("[^\\d]+"), delimiter)
+    return replace("""[^-\d]+""".toRegex(), delimiter)
         .split(delimiter)
         .filter(CharSequence::isNotEmpty)
         .map(String::toInt)
