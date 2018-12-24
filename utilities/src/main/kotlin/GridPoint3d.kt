@@ -15,6 +15,15 @@ data class GridPoint3d(val x: Int, val y: Int, val z: Int) {
         return GridPoint3d(x + vector.x, y + vector.y, z + vector.z)
     }
 
+    fun adjacentPoints(): Set<GridPoint3d> = setOf(
+        GridPoint3d(x + 1, y, z),
+        GridPoint3d(x - 1, y, z),
+        GridPoint3d(x, y + 1, z),
+        GridPoint3d(x, y - 1, z),
+        GridPoint3d(x, y, z + 1),
+        GridPoint3d(x, y, z - 1)
+    )
+
     fun l1DistanceTo(other: GridPoint3d): Int = abs(x - other.x) + abs(y - other.y) + abs(z - other.z)
 
     fun l2DistanceTo(other: GridPoint3d): Double {
