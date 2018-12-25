@@ -1,9 +1,5 @@
 @file:Suppress("unused")
 
-import com.google.common.collect.HashMultiset
-import com.google.common.collect.Multiset
-import extensions.toMap
-
 // From https://en.wikipedia.org/wiki/Greatest_common_divisor#Using_Euclid's_algorithm
 fun gcd(a: Int, b: Int): Int {
     if (a == 0 || b == 0) {

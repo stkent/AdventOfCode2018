@@ -1,9 +1,7 @@
 package extensions.collection
 
-import com.google.common.collect.HashMultiset
 import extensions.orderedPairs
 import io.kotlintest.shouldBe
-import io.kotlintest.shouldThrow
 import io.kotlintest.specs.BehaviorSpec
 
 class OrderedPairsTest : BehaviorSpec({

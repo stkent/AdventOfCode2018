@@ -8,7 +8,8 @@ data class SpatialData(val position: GridPoint2d, val velocity: GridVector2d) {
             val (x, y, vx, vy) = regex.matchEntire(s)!!.destructured
             return SpatialData(
                 position = GridPoint2d(x.toInt(), y.toInt()),
-                velocity = GridVector2d(vx.toInt(), vy.toInt()))
+                velocity = GridVector2d(vx.toInt(), vy.toInt())
+            )
         }
     }
 

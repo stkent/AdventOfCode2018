@@ -16,20 +16,6 @@ class Cave(private val scanDepth: Int, private val scanTarget: GridPoint2d) {
         return result
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     fun rescueTime(): Int {
         val firstNode = Node(point = GridPoint2d.origin, tool = Tool.TORCH)
         val targetNode = Node(point = scanTarget, tool = Tool.TORCH)
@@ -69,29 +55,6 @@ class Cave(private val scanDepth: Int, private val scanTarget: GridPoint2d) {
 
         throw IllegalStateException("Algorithm should terminate in while loop")
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     fun regionAt(point: GridPoint2d): RegionType {
         check(point.x >= 0 && point.y >= 0) { "Solid rock; cannot compute region type." }

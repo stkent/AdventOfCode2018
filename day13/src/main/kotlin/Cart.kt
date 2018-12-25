@@ -6,7 +6,8 @@ data class Cart(
     var position: GridPoint2d,
     var direction: GridDirection,
     var crashed: Boolean = false,
-    var intersectionCount: Int = 0) {
+    var intersectionCount: Int = 0
+) {
 
     companion object {
         fun direction(char: Char): GridDirection? {

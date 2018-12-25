@@ -1,5 +1,3 @@
-
-
 // observation: no adjacent traps (string search for parsed slice returned no results for .██.)
 class Ground(private val clay: Set<GridPoint2d>) {
 
@@ -45,14 +43,16 @@ class Ground(private val clay: Set<GridPoint2d>) {
         val splash = (clayMinY..clayMaxY)
             .asSequence()
             .map { fall -> spring.shiftBy(dy = fall).also { wetArea.add(it) } }
-            .firstOrNull { it.shiftBy(dy = 1) in clay
+            .firstOrNull {
+                it.shiftBy(dy = 1) in clay
             } ?: return wetArea + setOf(spring.copy(y = clayMaxY))
 
         var rightSteps = 1
         while (true) {
             if (splash.shiftBy(dx = rightSteps) !in clay &&
                 splash.shiftBy(dx = rightSteps, dy = 1) in clay &&
-                splash.shiftBy(dx = rightSteps + 1, dy = 1) !in clay) {
+                splash.shiftBy(dx = rightSteps + 1, dy = 1) !in clay
+            ) {
 
                 return wetArea + wettableArea(splash.shiftBy(dx = 2))
             } else if (splash.shiftBy(dx = rightSteps) in clay && splash.shiftBy(dx = rightSteps, dy = 1) in clay) {

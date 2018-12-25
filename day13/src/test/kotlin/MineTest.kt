@@ -1,7 +1,7 @@
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class MineTest: StringSpec({
+class MineTest : StringSpec({
 
     "Head on collision type 1" {
         val input = listOf(">-<")

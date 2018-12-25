@@ -2,7 +2,7 @@ import OpCode.*
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class OpCodeTest: StringSpec({
+class OpCodeTest : StringSpec({
 
     "Op codes consistent with sample are identified correctly" {
         val input = Sample(

@@ -47,9 +47,9 @@ fun <T> Collection<T>.highestFrequencyElements(): Set<T> {
     val highestFrequency = elementCounts.map { it.value }.max()
 
     return elementCounts
-            .filter { it.value == highestFrequency }
-            .map { it.key }
-            .toSet()
+        .filter { it.value == highestFrequency }
+        .map { it.key }
+        .toSet()
 }
 
 fun <T> Collection<T>.lowestFrequencyElements(): Set<T> {
@@ -59,9 +59,9 @@ fun <T> Collection<T>.lowestFrequencyElements(): Set<T> {
     val lowestFrequency = elementCounts.map { it.value }.min()
 
     return elementCounts
-            .filter { it.value == lowestFrequency }
-            .map { it.key }
-            .toSet()
+        .filter { it.value == lowestFrequency }
+        .map { it.key }
+        .toSet()
 }
 
 fun <T> Collection<T>.orderedPairs(): Map<Pair<T, T>, Int> {

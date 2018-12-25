@@ -37,9 +37,9 @@ data class GridPoint3d(val x: Int, val y: Int, val z: Int) {
 
     fun l2DistanceTo(other: GridPoint3d): Double {
         return sqrt(
-                (x - other.x).pow(2).toDouble() +
-                        (y - other.y).pow(2).toDouble() +
-                        (z - other.z).pow(2).toDouble()
+            (x - other.x).pow(2).toDouble() +
+                    (y - other.y).pow(2).toDouble() +
+                    (z - other.z).pow(2).toDouble()
         )
     }
 

@@ -4,8 +4,8 @@ class Battle(rawGoodGroups: List<String>, rawEvilGroups: List<String>, goodBoost
     private val evilGroups = rawEvilGroups.map { Group.create(good = false, rawGroup = it) }
 
     sealed class Result {
-        data class Win(val good: Boolean, val liveUnits: Int): Result()
-        object Stalemate: Result()
+        data class Win(val good: Boolean, val liveUnits: Int) : Result()
+        object Stalemate : Result()
     }
 
     private val battleOver: Boolean

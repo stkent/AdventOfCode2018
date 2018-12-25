@@ -1,6 +1,5 @@
 import extensions.extractInts
 import extensions.partitionBy
-import kotlin.math.abs
 
 fun main() {
     val input = resourceFile("input.txt").readLines()
@@ -10,5 +9,5 @@ fun main() {
         return@map GridPoint4d(ints[0], ints[1], ints[2], ints[3])
     }.toSet()
 
-    println(allStars.partitionBy(connected = { a, b -> a.l1DistanceTo(b) <= 3 }).count() )
+    println(allStars.partitionBy(connected = { a, b -> a.l1DistanceTo(b) <= 3 }).count())
 }

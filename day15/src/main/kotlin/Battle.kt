@@ -10,8 +10,8 @@ class Battle(private val rawMap: List<String>) {
         fun findAttackLocations(
             foeLocations: List<GridPoint2d>,
             liveWarriorLocations: List<GridPoint2d>,
-            cavern: List<String>): List<GridPoint2d>
-        {
+            cavern: List<String>
+        ): List<GridPoint2d> {
             return foeLocations
                 .flatMap { it.adjacentPoints() }
                 .toSet()
@@ -77,7 +77,8 @@ class Battle(private val rawMap: List<String>) {
                 val attackLocations = findAttackLocations(
                     foeLocations = foes.map(Warrior::location),
                     liveWarriorLocations = turnWarriors.map(Warrior::location),
-                    cavern = cavern)
+                    cavern = cavern
+                )
 
                 println(attackLocations)
 
