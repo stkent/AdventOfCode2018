@@ -3,35 +3,36 @@ import kotlin.math.abs
 
 fun main() {
     val input = resourceFile("input.txt").readLines()
-        .map { val ints = it.extractInts(); GridPoint4d(ints[0], ints[1], ints[2], ints[3]) }
-//        .also { println(it.joinToString("\n")) }
 
-    println(listOf(GridPoint4d(x=0, y=0, z=0, w=0), GridPoint4d(x=3, y=0, z=0, w=0), GridPoint4d(x=0, y=3, z=0, w=0), GridPoint4d(x=0, y=0, z=3, w=0), GridPoint4d(x=0, y=0, z=0, w=3), GridPoint4d(x=0, y=0, z=0, w=6)).any { it.l1DistanceTo(GridPoint4d(x=12, y=0, z=0, w=0)) <= 3 })
+    val allStars = input.map {
+        val ints = it.extractInts()
+        return@map GridPoint4d(ints[0], ints[1], ints[2], ints[3])
+    }
 
     val constellations = mutableSetOf<Set<GridPoint4d>>()
 
     while (true) {
-        val remaining = input - constellations.flatten()
-        if (remaining.isEmpty()) break
+        val availableStars = allStars - constellations.flatten()
+        if (availableStars.isEmpty()) break
 
-        val seed = remaining.first()
-        val newConstellation = mutableSetOf(seed)
+        val constellation = mutableSetOf(availableStars.first())
 
         while (true) {
-            var didExpandConstellation = false
+            val newMembers = (availableStars - constellation)
+                .filter { availableStar ->
+                    constellation.any { member ->
+                        member.l1DistanceTo(availableStar) <= 3
+                    }
+                }
 
-            val newjoins = (remaining - newConstellation).filter { unassigned -> newConstellation.any { it.l1DistanceTo(unassigned) <= 3 } }
-
-            if (newjoins.isNotEmpty()) {
-                newConstellation += newjoins
-                didExpandConstellation = true
+            if (newMembers.isNotEmpty()) {
+                constellation += newMembers
+            } else {
+                break
             }
-
-            if (!didExpandConstellation) break
         }
 
-        constellations += newConstellation
-        println(constellations.count())
+        constellations += constellation
     }
 
     println(constellations.count())
