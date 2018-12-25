@@ -1,15 +1,15 @@
-import Direction.*
+import GridDirection.*
 import Turn.LEFT
 import Turn.RIGHT
 
 data class Cart(
     var position: GridPoint2d,
-    var direction: Direction,
+    var direction: GridDirection,
     var crashed: Boolean = false,
     var intersectionCount: Int = 0) {
 
     companion object {
-        fun direction(char: Char): Direction? {
+        fun direction(char: Char): GridDirection? {
             return when (char) {
                 //@formatter:off
                  '^' -> N

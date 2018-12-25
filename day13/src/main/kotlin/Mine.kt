@@ -1,4 +1,4 @@
-import Direction.*
+import GridDirection.*
 import Turn.LEFT
 import Turn.RIGHT
 

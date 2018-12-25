@@ -11,9 +11,9 @@ data class GridPoint3d(val x: Int, val y: Int, val z: Int) {
         val origin = GridPoint3d(0, 0, 0)
     }
 
-    operator fun plus(vector: GridVector3d): GridPoint3d {
-        return GridPoint3d(x + vector.x, y + vector.y, z + vector.z)
-    }
+    operator fun minus(vector: GridVector3d) = GridPoint3d(x - vector.x, y - vector.y, z - vector.z)
+
+    operator fun plus(vector: GridVector3d) = GridPoint3d(x + vector.x, y + vector.y, z + vector.z)
 
     fun adjacentPoints(): Set<GridPoint3d> = setOf(
         GridPoint3d(x + 1, y, z),
@@ -23,6 +23,15 @@ data class GridPoint3d(val x: Int, val y: Int, val z: Int) {
         GridPoint3d(x, y, z + 1),
         GridPoint3d(x, y, z - 1)
     )
+
+    fun isInBounds(
+        xBounds: IntRange = Int.MIN_VALUE..Int.MAX_VALUE,
+        yBounds: IntRange = Int.MIN_VALUE..Int.MAX_VALUE,
+        zBounds: IntRange = Int.MIN_VALUE..Int.MAX_VALUE
+    ): Boolean {
+
+        return x in xBounds && y in yBounds && z in zBounds
+    }
 
     fun l1DistanceTo(other: GridPoint3d): Int = abs(x - other.x) + abs(y - other.y) + abs(z - other.z)
 
@@ -35,14 +44,5 @@ data class GridPoint3d(val x: Int, val y: Int, val z: Int) {
     }
 
     fun lInfDistanceTo(other: GridPoint3d) = max(max(abs(x - other.x), abs(y - other.y)), abs(z - other.z))
-
-    fun inBounds(
-            xBounds: IntRange = Int.MIN_VALUE..Int.MAX_VALUE,
-            yBounds: IntRange = Int.MIN_VALUE..Int.MAX_VALUE,
-            zBounds: IntRange = Int.MIN_VALUE..Int.MAX_VALUE
-    ): Boolean {
-
-        return x in xBounds && y in yBounds && z in zBounds
-    }
 
 }

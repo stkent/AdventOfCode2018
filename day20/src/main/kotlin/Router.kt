@@ -14,7 +14,7 @@ class Router {
                 '|' -> currentPoint = branchPoints.peekLast()
 
                 else -> {
-                    val nextPoint = currentPoint + Direction.valueOf("$char").toVector()
+                    val nextPoint = currentPoint + GridDirection.valueOf("$char").toVector()
 
                     val newPathLength = bestPathLengths[currentPoint]!! + 1
                     val oldBestPathLength = bestPathLengths[nextPoint]

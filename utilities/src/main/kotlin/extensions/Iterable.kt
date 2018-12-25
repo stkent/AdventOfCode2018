@@ -52,6 +52,23 @@ fun <T> Iterable<T>.mode(): Mode<T>? {
         ?.run { Mode(modalValue = key, count = value) }
 }
 
+fun <T> Iterable<T>.partitionBy(connected: (T, T) -> Boolean): Set<List<T>> {
+    val result = mutableSetOf<List<T>>()
+
+    forEach { newElement ->
+        val partsToConnect = result.filter { part ->
+            part.any { element -> connected(newElement, element) }
+        }
+
+        result.apply {
+            removeAll(partsToConnect)
+            add(partsToConnect.flatten() + newElement)
+        }
+    }
+
+    return result
+}
+
 // Returns a finite Sequence that loops through the original iterable the specified number of times.
 fun <T> Iterable<T>.repeat(times: Int): Sequence<T> {
     if (!iterator().hasNext()) return emptySequence()
