@@ -2,8 +2,9 @@
 
 Kotlin tests and solutions for the [2018 puzzles](http://adventofcode.com/2018).
 
-Previous years' solutions:
+Other years' solutions:
 
+- [2019 (Kotlin)](https://github.com/stkent/AdventOfCode2019)
 - [2017 (Kotlin)](https://github.com/stkent/AdventOfCode2017)
 - [2016 (Kotlin)](https://github.com/stkent/AdventOfCode2016)
 - [2015 (Python)](https://github.com/stkent/AdventOfCode2015)
